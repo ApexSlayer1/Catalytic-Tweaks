@@ -1,0 +1,13 @@
+
+{
+"required": true,
+"package": "com.catalytictweaks.catalytictweaksmod.mixin",
+"compatibilityLevel": "JAVA_21",
+"mixins": [
+  "PipezMixin"
+],
+"client": [],
+"injectors": {
+"defaultRequire": 1
+}
+}
