@@ -1,0 +1,87 @@
+---- Minecraft Crash Report ----
+// Who set us up the TNT?
+
+Time: 2024-11-28 10:03:10
+Description: Mod loading failures have occurred; consult the issue messages for more details
+
+net.neoforged.neoforge.logging.CrashReportExtender$ModLoadingCrashException: Mod loading has failed
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Mod loading issue for: pipez --
+Details:
+	Mod file: /C:/Users/chris/.gradle/caches/modules-2/files-2.1/maven.modrinth/pipez/Nf19Cudf/e659e10cc563b393c23dcac5329d759ebed75a12/pipez-Nf19Cudf.jar
+	Failure message: Mod pipez requires minecraft 1.21.3
+		Currently, minecraft is 1.21.1
+		
+	Mod version: 1.21.3-1.2.19
+	Mod issues URL: https://github.com/henkelmax/pipez/issues
+	Exception message: <No associated exception found>
+
+-- Mod loading issue for: pipez --
+Details:
+	Mod file: /C:/Users/chris/.gradle/caches/modules-2/files-2.1/maven.modrinth/pipez/Nf19Cudf/e659e10cc563b393c23dcac5329d759ebed75a12/pipez-Nf19Cudf.jar
+	Failure message: Mod pipez requires neoforge 21.3.0-beta or above
+		Currently, neoforge is 21.1.77
+		
+	Mod version: 1.21.3-1.2.19
+	Mod issues URL: https://github.com/henkelmax/pipez/issues
+	Exception message: <No associated exception found>
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.1
+	Minecraft Version ID: 1.21.1
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 21.0.5, JetBrains s.r.o.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), JetBrains s.r.o.
+	Memory: 659042304 bytes (628 MiB) / 1058013184 bytes (1009 MiB) up to 2063597568 bytes (1968 MiB)
+	CPUs: 8
+	Processor Vendor: GenuineIntel
+	Processor Name: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+	Identifier: Intel64 Family 6 Model 140 Stepping 1
+	Microarchitecture: Tiger Lake
+	Frequency (GHz): 2.42
+	Number of physical packages: 1
+	Number of physical CPUs: 4
+	Number of logical CPUs: 8
+	Graphics card #0 name: Intel(R) Iris(R) Xe Graphics
+	Graphics card #0 vendor: Intel Corporation
+	Graphics card #0 VRAM (MiB): 1024.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 27.20.100.9268
+	Memory slot #0 capacity (MiB): 4096.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MiB): 4096.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MiB): 21183.19
+	Virtual memory used (MiB): 15147.45
+	Swap memory total (MiB): 13312.00
+	Swap memory used (MiB): 2841.86
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 50293.98, total: 242720.31
+	Space in storage for workdir (MiB): available: 50293.98, total: 242720.31
+	JVM Flags: 0 total; 
+	ModLauncher: 11.0.4+main.d2e20e43
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.31.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.31.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.31.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.4.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.4.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		neoforge-21.1.77-minecraft-merged.jar             |Minecraft                     |minecraft                     |1.21.1              |Manifest: NOSIGNATURE
+		neoforge-21.1.77-minecraft-merged.jar             |NeoForge                      |neoforge                      |21.1.77             |Manifest: NOSIGNATURE
