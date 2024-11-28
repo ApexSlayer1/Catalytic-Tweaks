@@ -74,7 +74,7 @@ configurations {
 }
 
 dependencies {
-    implementation "maven.modrinth:pipez:Nf19Cudf"
+    implementation "maven.modrinth:pipez:z20ZR1YE"
 
 
 

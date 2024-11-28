@@ -1,0 +1,15 @@
+
+{
+  "required": true,
+  "minVersion": "0.8.4",
+  "package": "com.catalytictweaks.catalytictweaksmod.mixin",
+  "refmap": "mixins.catalytictweaks.refmap.json",
+  "mixins": [
+    "PipezMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
