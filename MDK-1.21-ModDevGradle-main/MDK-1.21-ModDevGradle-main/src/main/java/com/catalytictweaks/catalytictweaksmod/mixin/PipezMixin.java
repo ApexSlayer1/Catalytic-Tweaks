@@ -5,11 +5,13 @@ import com.mojang.logging.LogUtils;
 import de.maxhenkel.pipez.Upgrade;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 import java.lang.reflect.Field;
 
 @Mixin(Upgrade.class)
 public class PipezMixin {
+    @Unique
     private static final Logger LOGGER = LogUtils.getLogger();
 
     static {
@@ -18,6 +20,7 @@ public class PipezMixin {
     }
 
     // Method to modify enums after confirming configuration is loaded
+    @Unique
     private static void modifyEnum() {
         LOGGER.info("Modifying enum values after configuration is loaded.");
 // makes the pipez config adjustable
