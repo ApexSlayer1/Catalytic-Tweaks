@@ -56,7 +56,7 @@ neoForge {
 
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
+            logLevel = org.slf4j.event.Level.WARN
         }
     }
 
@@ -74,7 +74,7 @@ configurations {
 }
 
 dependencies {
-    implementation "maven.modrinth:pipez:z20ZR1YE"
+    compileOnly("maven.modrinth:pipez:z20ZR1YE")
 
 
 

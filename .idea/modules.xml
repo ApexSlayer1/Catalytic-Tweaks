@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Catalytic-Tweaks.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Catalytic-Tweaks.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Catalytic-Tweaks.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Catalytic-Tweaks.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHub.Catalytic-Tweaks.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHub.Catalytic-Tweaks.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.catalytictweaks.catalytictweaksmod.Catalytic-Tweaks.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.catalytictweaks.catalytictweaksmod.Catalytic-Tweaks.main.iml" />
     </modules>
   </component>

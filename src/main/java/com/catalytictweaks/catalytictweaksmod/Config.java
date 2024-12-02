@@ -1,5 +1,6 @@
 package com.catalytictweaks.catalytictweaksmod;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -7,34 +8,57 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import org.slf4j.Logger;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
+
+//builds config
 @EventBusSubscriber(modid = catalytictweaks.MODID, bus = EventBusSubscriber.Bus.MOD)
-public class Config
-{
+public class Config {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
+    // Define BASIC upgrade settings
+    private static final ModConfigSpec.BooleanValue BASIC_CAN_CHANGE_REDSTONE_MODE = BUILDER
+            .define("PIPEZ.BASIC.canChangeRedstoneMode", true);
+    private static final ModConfigSpec.BooleanValue BASIC_CAN_CHANGE_FILTER = BUILDER
+            .define("PIPEZ.BASIC.canChangeFilter", true);
+    private static final ModConfigSpec.BooleanValue BASIC_CAN_CHANGE_DISTRIBUTION = BUILDER
+            .define("PIPEZ.BASIC.canChangeDistributionMode", true);
 
-    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
+    // Define IMPROVED upgrade settings
+    private static final ModConfigSpec.BooleanValue IMPROVED_CAN_CHANGE_REDSTONE_MODE = BUILDER
+            .define("PIPEZ.IMPROVED.canChangeRedstoneMode", true);
+    private static final ModConfigSpec.BooleanValue IMPROVED_CAN_CHANGE_FILTER = BUILDER
+            .define("PIPEZ.IMPROVED.canChangeFilter", true);
+    private static final ModConfigSpec.BooleanValue IMPROVED_CAN_CHANGE_DISTRIBUTION = BUILDER
+            .define("PIPEZ.IMPROVED.canChangeDistributionMode", true);
 
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
+    // Define ADVANCED upgrade settings
+    private static final ModConfigSpec.BooleanValue ADVANCED_CAN_CHANGE_REDSTONE_MODE = BUILDER
+            .define("PIPEZ.ADVANCED.canChangeRedstoneMode", true);
+    private static final ModConfigSpec.BooleanValue ADVANCED_CAN_CHANGE_FILTER = BUILDER
+            .define("PIPEZ.ADVANCED.canChangeFilter", true);
+    private static final ModConfigSpec.BooleanValue ADVANCED_CAN_CHANGE_DISTRIBUTION = BUILDER
+            .define("PIPEZ.ADVANCED.canChangeDistributionMode", true);
 
-    // a list of strings that are treated as resource locations for items
-    private static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), Config::validateItemName);
+    // Define ULTIMATE upgrade settings
+    private static final ModConfigSpec.BooleanValue ULTIMATE_CAN_CHANGE_REDSTONE_MODE = BUILDER
+            .define("PIPEZ.ULTIMATE.canChangeRedstoneMode", true);
+    private static final ModConfigSpec.BooleanValue ULTIMATE_CAN_CHANGE_FILTER = BUILDER
+            .define("PIPEZ.ULTIMATE.canChangeFilter", true);
+    private static final ModConfigSpec.BooleanValue ULTIMATE_CAN_CHANGE_DISTRIBUTION = BUILDER
+            .define("PIPEZ.ULTIMATE.canChangeDistributionMode", true);
+
+    // Define INFINITY upgrade settings
+    private static final ModConfigSpec.BooleanValue INFINITY_CAN_CHANGE_REDSTONE_MODE = BUILDER
+            .define("PIPEZ.INFINITY.canChangeRedstoneMode", true);
+    private static final ModConfigSpec.BooleanValue INFINITY_CAN_CHANGE_FILTER = BUILDER
+            .define("PIPEZ.INFINITY.canChangeFilter", true);
+    private static final ModConfigSpec.BooleanValue INFINITY_CAN_CHANGE_DISTRIBUTION = BUILDER
+            .define("PIPEZ.INFINITY.canChangeDistributionMode", true);
+
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -43,21 +67,72 @@ public class Config
     public static String magicNumberIntroduction;
     public static Set<Item> items;
 
-    private static boolean validateItemName(final Object obj)
-    {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
+    public static boolean basicCanChangeRedstoneMode;
+    public static boolean basicCanChangeFilter;
+    public static boolean basicCanChangeDistribution;
+    public static boolean improvedCanChangeRedstoneMode;
+    public static boolean improvedCanChangeFilter;
+    public static boolean improvedCanChangeDistribution;
+    public static boolean advancedCanChangeRedstoneMode;
+    public static boolean advancedCanChangeFilter;
+    public static boolean advancedCanChangeDistribution;
+    public static boolean ultimateCanChangeRedstoneMode;
+    public static boolean ultimateCanChangeFilter;
+    public static boolean ultimateCanChangeDistribution;
+    public static boolean infinityCanChangeRedstoneMode;
+    public static boolean infinityCanChangeFilter;
+    public static boolean infinityCanChangeDistribution;
+
+    // Runnable callback for configuration change
+    private static Runnable configChangeCallback;
+
+    public static void setConfigChangeCallback(Runnable callback) {
+        configChangeCallback = callback;
     }
 
     @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
-        logDirtBlock = LOG_DIRT_BLOCK.get();
-        magicNumber = MAGIC_NUMBER.get();
-        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
+    static void onLoad(final ModConfigEvent event) {
+        if (event.getConfig().getSpec() == SPEC) {
+            LOGGER.info("Loading configuration settings...");
 
-        // convert the list of strings into a set of items
-        items = ITEM_STRINGS.get().stream()
-                .map(itemName -> BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)))
-                .collect(Collectors.toSet());
+            // Load BASIC upgrade configurations
+            basicCanChangeRedstoneMode = BASIC_CAN_CHANGE_REDSTONE_MODE.get();
+            basicCanChangeFilter = BASIC_CAN_CHANGE_FILTER.get();
+            basicCanChangeDistribution = BASIC_CAN_CHANGE_DISTRIBUTION.get();
+
+            // Load IMPROVED upgrade configurations
+            improvedCanChangeRedstoneMode = IMPROVED_CAN_CHANGE_REDSTONE_MODE.get();
+            improvedCanChangeFilter = IMPROVED_CAN_CHANGE_FILTER.get();
+            improvedCanChangeDistribution = IMPROVED_CAN_CHANGE_DISTRIBUTION.get();
+
+            // Load ADVANCED upgrade configurations
+            advancedCanChangeRedstoneMode = ADVANCED_CAN_CHANGE_REDSTONE_MODE.get();
+            advancedCanChangeFilter = ADVANCED_CAN_CHANGE_FILTER.get();
+            advancedCanChangeDistribution = ADVANCED_CAN_CHANGE_DISTRIBUTION.get();
+
+            // Load ULTIMATE upgrade configurations
+            ultimateCanChangeRedstoneMode = ULTIMATE_CAN_CHANGE_REDSTONE_MODE.get();
+            ultimateCanChangeFilter = ULTIMATE_CAN_CHANGE_FILTER.get();
+            ultimateCanChangeDistribution = ULTIMATE_CAN_CHANGE_DISTRIBUTION.get();
+
+            // Load INFINITY upgrade configurations
+            infinityCanChangeRedstoneMode = INFINITY_CAN_CHANGE_REDSTONE_MODE.get();
+            infinityCanChangeFilter = INFINITY_CAN_CHANGE_FILTER.get();
+            infinityCanChangeDistribution = INFINITY_CAN_CHANGE_DISTRIBUTION.get();
+
+            onConfigLoaded();
+        }
+    }
+
+    private static void onConfigLoaded() {
+        LOGGER.info("Configuration has been successfully loaded.");
+
+        if (configChangeCallback != null) {
+            configChangeCallback.run();
+        }
+    }
+
+    private static boolean validateItemName(final Object obj) {
+        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
     }
 }

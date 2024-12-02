@@ -1,65 +1,71 @@
 package com.catalytictweaks.catalytictweaksmod.mixin;
 
+import com.catalytictweaks.catalytictweaksmod.Config;
+import com.mojang.logging.LogUtils;
 import de.maxhenkel.pipez.Upgrade;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Field;
 
-@Mixin(Upgrade.class)  // Target the Upgrade enum class
+@Mixin(Upgrade.class)
 public class PipezMixin {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-    // Inject code into the static block of the Upgrade enum
-    @Inject(method = "<clinit>", at = @At("RETURN"))
-    private static void modifyEnumAfterInitialization(CallbackInfo ci) {
-        // Modify the enum constants after they are initialized
+    static {
+        // Initial status, indicating configuration not loaded yet
+        Config.setConfigChangeCallback(PipezMixin::modifyEnum);
+    }
+
+    // Method to modify enums after confirming configuration is loaded
+    private static void modifyEnum() {
+        LOGGER.info("Modifying enum values after configuration is loaded.");
+// makes the pipez config adjustable
         for (Upgrade upgrade : Upgrade.values()) {
             try {
-                // Access the fields using reflection
                 Field canChangeRedstoneModeField = Upgrade.class.getDeclaredField("canChangeRedstoneMode");
                 Field canChangeFilterField = Upgrade.class.getDeclaredField("canChangeFilter");
                 Field canChangeDistributionModeField = Upgrade.class.getDeclaredField("canChangeDistributionMode");
 
-                // Make the fields accessible
                 canChangeRedstoneModeField.setAccessible(true);
                 canChangeFilterField.setAccessible(true);
                 canChangeDistributionModeField.setAccessible(true);
-
-                // Modify the values for each upgrade
+// changes the values with values stated in toml
                 switch (upgrade) {
                     case BASIC:
-                        // Set the fields for BASIC upgrade
-                        canChangeRedstoneModeField.set(upgrade, true);
-                        canChangeFilterField.set(upgrade, true);
-                        canChangeDistributionModeField.set(upgrade, true);
+                        canChangeRedstoneModeField.set(upgrade, Config.basicCanChangeRedstoneMode);
+                        canChangeFilterField.set(upgrade, Config.basicCanChangeFilter);
+                        canChangeDistributionModeField.set(upgrade, Config.basicCanChangeDistribution);
                         break;
                     case IMPROVED:
-                        // Set the fields for IMPROVED upgrade
-                        canChangeRedstoneModeField.set(upgrade, true);
-                        canChangeFilterField.set(upgrade, true);
-                        canChangeDistributionModeField.set(upgrade, true);
+                        canChangeRedstoneModeField.set(upgrade, Config.improvedCanChangeRedstoneMode);
+                        canChangeFilterField.set(upgrade, Config.improvedCanChangeFilter);
+                        canChangeDistributionModeField.set(upgrade, Config.improvedCanChangeDistribution);
                         break;
                     case ADVANCED:
-                        // Set the fields for ADVANCED upgrade
-                        canChangeRedstoneModeField.set(upgrade, true);
-                        canChangeFilterField.set(upgrade, true);
-                        canChangeDistributionModeField.set(upgrade, true);
+                        canChangeRedstoneModeField.set(upgrade, Config.advancedCanChangeRedstoneMode);
+                        canChangeFilterField.set(upgrade, Config.advancedCanChangeFilter);
+                        canChangeDistributionModeField.set(upgrade, Config.advancedCanChangeDistribution);
                         break;
                     case ULTIMATE:
-                        // Set the fields for ULTIMATE upgrade
-                        canChangeRedstoneModeField.set(upgrade, true);
-                        canChangeFilterField.set(upgrade, true);
-                        canChangeDistributionModeField.set(upgrade, true);
+                        canChangeRedstoneModeField.set(upgrade, Config.ultimateCanChangeRedstoneMode);
+                        canChangeFilterField.set(upgrade, Config.ultimateCanChangeFilter);
+                        canChangeDistributionModeField.set(upgrade, Config.ultimateCanChangeDistribution);
                         break;
                     case INFINITY:
-                        // Set the fields for INFINITY upgrade
-                        canChangeRedstoneModeField.set(upgrade, true);
-                        canChangeFilterField.set(upgrade, true);
-                        canChangeDistributionModeField.set(upgrade, true);
+                        canChangeRedstoneModeField.set(upgrade, Config.infinityCanChangeRedstoneMode);
+                        canChangeFilterField.set(upgrade, Config.infinityCanChangeFilter);
+                        canChangeDistributionModeField.set(upgrade, Config.infinityCanChangeDistribution);
                         break;
                 }
+
+                // Log the new values of fields
+                LOGGER.info("After modification - {}: RedstoneMode: {}, Filter: {}, Distribution: {}",
+                        upgrade,
+                        canChangeRedstoneModeField.get(upgrade),
+                        canChangeFilterField.get(upgrade),
+                        canChangeDistributionModeField.get(upgrade));
+
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
