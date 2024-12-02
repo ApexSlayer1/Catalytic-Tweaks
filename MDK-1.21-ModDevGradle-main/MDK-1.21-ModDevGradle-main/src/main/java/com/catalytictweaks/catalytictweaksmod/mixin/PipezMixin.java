@@ -12,17 +12,17 @@ import java.lang.reflect.Field;
 @Mixin(Upgrade.class)
 public class PipezMixin {
     @Unique
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger catalytic_Tweaks$LOGGER = LogUtils.getLogger();
 
     static {
         // Initial status, indicating configuration not loaded yet
-        Config.setConfigChangeCallback(PipezMixin::modifyEnum);
+        Config.setConfigChangeCallback(PipezMixin::catalytic_Tweaks$modifyEnum);
     }
 
     // Method to modify enums after confirming configuration is loaded
     @Unique
-    private static void modifyEnum() {
-        LOGGER.info("Modifying enum values after configuration is loaded.");
+    private static void catalytic_Tweaks$modifyEnum() {
+        catalytic_Tweaks$LOGGER.info("Modifying enum values after configuration is loaded.");
 // makes the pipez config adjustable
         for (Upgrade upgrade : Upgrade.values()) {
             try {
@@ -63,7 +63,7 @@ public class PipezMixin {
                 }
 
                 // Log the new values of fields
-                LOGGER.info("After modification - {}: RedstoneMode: {}, Filter: {}, Distribution: {}",
+                catalytic_Tweaks$LOGGER.info("After modification - {}: RedstoneMode: {}, Filter: {}, Distribution: {}",
                         upgrade,
                         canChangeRedstoneModeField.get(upgrade),
                         canChangeFilterField.get(upgrade),
